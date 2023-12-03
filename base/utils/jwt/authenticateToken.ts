@@ -19,7 +19,7 @@ export default function authenticateToken(
   const token = authHeader?.split(" ")[1];
 
   if (token == null) {
-    return unauthorizedResponse(res);
+    return unauthorizedResponse();
   }
 
   jwt.verify(
@@ -29,7 +29,7 @@ export default function authenticateToken(
       console.log(err);
 
       if (err) {
-        return forbiddenResponse(res);
+        return forbiddenResponse();
       }
 
       req.user = user;

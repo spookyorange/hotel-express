@@ -1,6 +1,5 @@
-import { Response } from "express";
 import responser from "./responser";
 
-export default function unauthorizedResponse(res: Response) {
-  return responser(res, 401, "Unauthorized");
+export default function unauthorizedResponse() {
+  return responser(401, "Unauthorized");
 }
