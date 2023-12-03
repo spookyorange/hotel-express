@@ -26,8 +26,6 @@ export default function authenticateToken(
     token,
     getEnv<string>("TOKEN_SECRET", "secret"),
     (err: any, user: any) => {
-      console.log(err);
-
       if (err) {
         return forbiddenResponse();
       }
