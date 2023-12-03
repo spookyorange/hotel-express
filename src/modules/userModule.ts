@@ -2,8 +2,8 @@ import { Router } from "express";
 
 const router = Router();
 
-router.get("/x", (req, res) => {
-  res.send("Hello World!");
+router.post("/sign-up", (req, res) => {
+  res.send("Sign up");
 });
 
 export { router };
