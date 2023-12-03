@@ -6,7 +6,6 @@ export default function responser(
   message: string,
   data?: any
 ) {
-  res.status(statusCode);
   res.send({
     statusCode,
     message,

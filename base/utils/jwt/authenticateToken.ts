@@ -4,12 +4,17 @@ import jwt from "jsonwebtoken";
 import getEnv from "../getEnv";
 import unauthorizedResponse from "../../express/response/unauthorizedResponse";
 import forbiddenResponse from "../../express/response/forbiddenResponse";
+import shouldAuthMiddlewareRun from "./shouldRun/shouldAuthMiddlewareRun";
 
 export default function authenticateToken(
   req: ExtendedRequest,
   res: Response,
   next: NextFunction
 ) {
+  if (!shouldAuthMiddlewareRun(req, res)) {
+    return next();
+  }
+
   const authHeader = req.headers["authorization"];
   const token = authHeader?.split(" ")[1];
 
