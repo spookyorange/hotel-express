@@ -1,0 +1,6 @@
+Rezervasyon servisinde bir form ile kullanıcının hotel adına göre ara yapabilmesi ve otellerin listelenmesini istiyoruz.
+Kullanıcı listelenen otellerden herhangi birini seçtikten sonra rezervasyon için check-in tarih, check-out tarihi, misafir sayısı, ad, soyad, telefon, email adresini veritabanına kaydetmen​ ve random bir rezervasyon numarası oluşturmanı bekliyoruz.
+
+Platform Rezervasyon Takibi
+
+Platform admininin bir kullanıcı adı ve şifre ile authentication yaptıktan sonra ayrı bir sayfada yapılan rezervasyonları misafir adı, soyadı, otel adı, checkin ve checkout tarih ve rezervasyon kodu bilgileri listeleyip onayladığı bir arayüz yapanı istiyoruz.
