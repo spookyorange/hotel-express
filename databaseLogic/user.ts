@@ -49,9 +49,23 @@ export async function signIn(dto: SignInDto) {
       return MessageConstants.INVALID_CREDENTIALS;
     }
 
-    const accessToken = generateAccessToken(user.id);
+    const accessToken = await generateAccessToken(user.id);
 
     return { accessToken };
+  } catch (error: any) {
+    return handleError(error);
+  }
+}
+
+export async function getUserById(id: number) {
+  try {
+    const user = await prismaClient.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return user;
   } catch (error: any) {
     return handleError(error);
   }
