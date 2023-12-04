@@ -3,12 +3,8 @@ import successResponse from "../../base/express/response/successResponse";
 import { SignUpDto } from "../../src/dto/user/sign-up.dto";
 import { SignInDto } from "../../src/dto/user/sign-in.dto";
 import { signUp, signIn } from "../../databaseLogic/user";
-import alreadyExistsResponse from "../../base/express/response/alreadyExistsResponse";
-import { MessageConstants } from "../../base/constants";
-import invalidCredentialsResponse from "../../base/express/response/invalidCredentialsResponse";
 import classValidator from "../../base/validator/classValidator";
 import badRequestResponse from "../../base/express/response/badRequestResponse";
-import recordNotFoundResponse from "../../base/express/response/recordNotFoundResponse";
 import handleErrorResponse from "../../base/express/handleErrorResponse";
 
 const router = Router();
