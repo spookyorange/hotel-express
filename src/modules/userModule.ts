@@ -6,11 +6,22 @@ import { signUp, signIn } from "../../databaseLogic/user";
 import alreadyExistsResponse from "../../base/express/response/alreadyExistsResponse";
 import { MessageConstants } from "../../base/constants";
 import invalidCredentialsResponse from "../../base/express/response/invalidCredentialsResponse";
+import classValidator from "../../base/validator/classValidator";
+import badRequestResponse from "../../base/express/response/badRequestResponse";
 
 const router = Router();
 
 router.post("/sign-up", async (req, res) => {
   const body: SignUpDto = req.body;
+
+  try {
+    classValidator<SignUpDto>(body, {
+      presence: ["email", "username", "password"],
+      isString: ["email", "username", "password"],
+    });
+  } catch (error: any) {
+    return res.send(badRequestResponse(error.message));
+  }
 
   const data = await signUp(body);
 
@@ -23,6 +34,15 @@ router.post("/sign-up", async (req, res) => {
 
 router.post("/sign-in", async (req, res) => {
   const body: SignInDto = req.body;
+
+  try {
+    classValidator<SignInDto>(body, {
+      presence: ["username", "password"],
+      isString: ["username", "password"],
+    });
+  } catch (error: any) {
+    return res.send(badRequestResponse(error.message));
+  }
 
   const data = await signIn(body);
 
