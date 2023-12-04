@@ -1,0 +1,36 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    networks:
+      - orange
+    environment:
+      # please change the password to a secure one
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: hotel-express
+    volumes:
+      - ./mysql:/var/lib/mysql # you are encouraged to change this to a more secure location
+    # you can expose the port if you want to access it from outside the network
+    # ports:
+    #   - "3306:3306"
+
+  hotel-express:
+    image: hotel-express
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      # change the database password to the one you set above
+      - DATABASE_URL=mysql://root:root@db:3306/hotel-express
+      # place your own token secret here
+      - TOKEN_SECRET=super_secret_key
+      - JWT_EXPIRES_IN=1d
+      - SALT_ROUNDS=10
+    networks:
+      - orange
+
+networks:
+  orange:
