@@ -1,6 +1,7 @@
 import { CreateReservationDto } from "../src/dto/reservation/create-reservation.dto";
 import prisma from "../clients/prismaClient";
 import handleError from "../base/express/handleError";
+import { Prisma } from "@prisma/client";
 
 export async function createReservation(dto: CreateReservationDto) {
   try {
@@ -16,6 +17,30 @@ export async function createReservation(dto: CreateReservationDto) {
           },
         },
       },
+    });
+  } catch (error: any) {
+    return handleError(error);
+  }
+}
+
+export async function getReservations(
+  query: Prisma.ReservationFindManyArgs = {}
+) {
+  try {
+    const reservations = await prisma.reservation.findMany({
+      ...query,
+      include: {
+        _count: { select: { ReservationAttendee: true } },
+        ReservationAttendee: true,
+      },
+    });
+
+    return reservations.map((reservation) => {
+      return {
+        ...reservation,
+        _count: undefined,
+        numberOfGuests: reservation._count.ReservationAttendee,
+      };
     });
   } catch (error: any) {
     return handleError(error);

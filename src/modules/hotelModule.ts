@@ -6,13 +6,13 @@ import { createHotel, getHotels } from "../../databaseLogic/hotel";
 import authorizeAdmin from "../../base/utils/jwt/authorizeAdmin";
 import classValidator from "../../base/validator/classValidator";
 import handleErrorResponse from "../../base/express/handleErrorResponse";
-import getPagination from "../../base/express/request/getPagination";
+import getPaginationFromQuery from "../../base/express/request/getPagination";
 import getFilter from "../../base/express/request/getFilter";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
-  const pagination = getPagination(req.query as any);
+  const pagination = getPaginationFromQuery(req.query as any);
   const nameFilter = getFilter(req.query as any, "name");
 
   const body = await getHotels({

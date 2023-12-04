@@ -5,9 +5,32 @@ import classValidator from "../../base/validator/classValidator";
 import handleErrorResponse from "../../base/express/handleErrorResponse";
 import { CreateReservationDto } from "../dto/reservation/create-reservation.dto";
 import ExtendedRequest from "../../base/express/extendedRequest";
-import { createReservation } from "../../databaseLogic/reservation";
+import {
+  createReservation,
+  getReservations,
+} from "../../databaseLogic/reservation";
+import getPaginationFromQuery from "../../base/express/request/getPagination";
 
 const router = Router();
+
+router.get("/", async (req: ExtendedRequest, res) => {
+  const userId = req.user?.id;
+
+  const pagination = getPaginationFromQuery(req.query as any);
+
+  if (!userId) {
+    return res.send(badRequestResponse("Something went terribly wrong!"));
+  }
+
+  const data = await getReservations({
+    ...pagination,
+    where: {
+      reservationCreatorId: userId,
+    },
+  });
+
+  return res.send(successResponse("Reservations fetched successfully!", data));
+});
 
 router.post("/", async (req: ExtendedRequest, res) => {
   const body: CreateReservationDto = req.body;
