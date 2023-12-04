@@ -21,3 +21,7 @@ app.listen(port, () => {
 });
 
 export { app };
+
+app.on("error", (error) => {
+  console.log(error);
+});
