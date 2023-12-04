@@ -46,3 +46,19 @@ export async function getReservations(
     return handleError(error);
   }
 }
+
+export async function updateReservationById(
+  id: number,
+  data: Prisma.ReservationUpdateInput
+) {
+  try {
+    return await prisma.reservation.update({
+      where: {
+        id,
+      },
+      data,
+    });
+  } catch (error: any) {
+    return handleError(error);
+  }
+}

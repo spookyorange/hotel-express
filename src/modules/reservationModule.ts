@@ -8,6 +8,7 @@ import ExtendedRequest from "../../base/express/extendedRequest";
 import {
   createReservation,
   getReservations,
+  updateReservationById,
 } from "../../databaseLogic/reservation";
 import getPaginationFromQuery from "../../base/express/request/getPagination";
 import authorizeAdmin from "../../base/utils/jwt/authorizeAdmin";
@@ -54,6 +55,58 @@ router.get("/admin", authorizeAdmin, async (req: ExtendedRequest, res) => {
 
   return res.send(successResponse("Reservations fetched successfully!", data));
 });
+
+router.post(
+  "/:id/verify",
+  authorizeAdmin,
+  async (req: ExtendedRequest, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.send(badRequestResponse("Something went terribly wrong!"));
+    }
+
+    const data = await updateReservationById(Number(id), {
+      verified: true,
+    });
+
+    const error = handleErrorResponse(data);
+
+    if (error) {
+      return res.send(error);
+    }
+
+    return res.send(
+      successResponse("Reservation verified successfully!", data)
+    );
+  }
+);
+
+router.post(
+  "/:id/unverify/",
+  authorizeAdmin,
+  async (req: ExtendedRequest, res) => {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.send(badRequestResponse("Something went terribly wrong!"));
+    }
+
+    const data = await updateReservationById(Number(id), {
+      verified: false,
+    });
+
+    const error = handleErrorResponse(data);
+
+    if (error) {
+      return res.send(error);
+    }
+
+    return res.send(
+      successResponse("Reservation verified successfully!", data)
+    );
+  }
+);
 
 router.post("/", async (req: ExtendedRequest, res) => {
   const body: CreateReservationDto = req.body;
