@@ -10,6 +10,7 @@ import {
   getReservations,
 } from "../../databaseLogic/reservation";
 import getPaginationFromQuery from "../../base/express/request/getPagination";
+import authorizeAdmin from "../../base/utils/jwt/authorizeAdmin";
 
 const router = Router();
 
@@ -26,6 +27,28 @@ router.get("/", async (req: ExtendedRequest, res) => {
     ...pagination,
     where: {
       reservationCreatorId: userId,
+    },
+  });
+
+  return res.send(successResponse("Reservations fetched successfully!", data));
+});
+
+router.get("/admin", authorizeAdmin, async (req: ExtendedRequest, res) => {
+  const pagination = getPaginationFromQuery(req.query as any);
+  const verified = req.query.verified as string;
+
+  let whereVerified: boolean | undefined;
+
+  if (verified === "true") {
+    whereVerified = true;
+  } else if (verified === "false") {
+    whereVerified = false;
+  }
+
+  const data = await getReservations({
+    ...pagination,
+    where: {
+      verified: whereVerified,
     },
   });
 

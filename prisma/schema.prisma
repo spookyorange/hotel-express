@@ -36,6 +36,7 @@ model Reservation {
   checkOut             DateTime
   reservationCreatorId Int
   hotelId              Int
+  verified             Boolean               @default(false)
   Hotel                Hotel                 @relation(fields: [hotelId], references: [id])
   ReservationCreator   User                  @relation(fields: [reservationCreatorId], references: [id])
   ReservationAttendee  ReservationAttendee[]
