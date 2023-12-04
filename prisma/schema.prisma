@@ -34,7 +34,6 @@ model Reservation {
   id                   Int                   @id @default(autoincrement())
   checkIn              DateTime
   checkOut             DateTime
-  reservationNo        String                @unique
   reservationCreatorId Int
   hotelId              Int
   Hotel                Hotel                 @relation(fields: [hotelId], references: [id])

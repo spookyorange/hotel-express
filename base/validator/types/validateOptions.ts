@@ -3,4 +3,5 @@ export interface ValidateOptions {
   isString?: string[];
   isNumber?: string[];
   isBoolean?: string[];
+  isDate?: string[];
 }

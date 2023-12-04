@@ -30,6 +30,8 @@ export default function handleErrorResponse(
       return invalidCredentialsResponse(invalidCredentialsResponseString ?? "");
     case undefined:
       return badRequestResponse("Something went wrong");
+    case "":
+      return badRequestResponse("Something went wrong");
     default:
       return null;
   }
