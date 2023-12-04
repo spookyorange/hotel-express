@@ -8,8 +8,9 @@ Hotel Express is an app about hotel management, reservation and more!
 2. Install dependencies(`npm install` or `yarn`)
 3. Copy ".env.template" to ".env"
 4. Update ".env" with your own configuration(make sure to create a secret key with crypto)
-5. Generate the prisma client(`npx prisma generate`)
-6. Run the app(`npm run dev` or `yarn dev`)
+5. Push the prisma schema(`npx prisma db push`)
+6. Generate the prisma client(`npx prisma generate`)
+7. Run the app(`npm run dev` or `yarn dev`)
 
 ## Installation For Production
 
