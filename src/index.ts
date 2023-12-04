@@ -1,6 +1,6 @@
 import express from "express";
 import { router as containerRouter } from "./modules/containerRouter";
-import authenticateToken from "./middlewares/authenticationMiddleware";
+import authenticateToken from "../base/utils/jwt/authenticateToken";
 import bodyParser from "body-parser";
 
 const app = express();

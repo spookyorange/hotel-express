@@ -8,6 +8,8 @@ import { MessageConstants } from "../../base/constants";
 import invalidCredentialsResponse from "../../base/express/response/invalidCredentialsResponse";
 import classValidator from "../../base/validator/classValidator";
 import badRequestResponse from "../../base/express/response/badRequestResponse";
+import recordNotFoundResponse from "../../base/express/response/recordNotFoundResponse";
+import handleErrorResponse from "../../base/express/handleErrorResponse";
 
 const router = Router();
 
@@ -25,8 +27,10 @@ router.post("/sign-up", async (req, res) => {
 
   const data = await signUp(body);
 
-  if (data === MessageConstants.RECORD_ALREADY_EXISTS) {
-    return res.send(alreadyExistsResponse());
+  const error = handleErrorResponse(data);
+
+  if (error) {
+    return res.send(error);
   }
 
   return res.send(successResponse("User signed up successfully!", data));
@@ -46,14 +50,13 @@ router.post("/sign-in", async (req, res) => {
 
   const data = await signIn(body);
 
-  if (data === MessageConstants.RECORD_NOT_FOUND) {
-    return res.send(invalidCredentialsResponse("Username not found"));
-  }
+  const error = handleErrorResponse(data, {
+    notFoundResponseString: "Username not found",
+    invalidCredentialsResponseString: "Invalid credentials",
+  });
 
-  if (data === MessageConstants.INVALID_CREDENTIALS) {
-    return res.send(
-      invalidCredentialsResponse("Username or password is incorrect")
-    );
+  if (error) {
+    return res.send(error);
   }
 
   return res.send(successResponse("User signed in successfully!", data));

@@ -8,6 +8,6 @@ export async function createHotel(dto: CreateHotelDto) {
       data: dto,
     });
   } catch (error: any) {
-    handleError(error);
+    return handleError(error);
   }
 }
